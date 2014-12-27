@@ -210,6 +210,9 @@ void CNAME(enum CBLAS_ORDER order,
 
 #ifdef MAX_STACK_ALLOC
   int stack_alloc_size = m + n;
+  if(stack_alloc_size < 128)
+      //dgemv_n.S require a 128 bytes buffer
+      stack_alloc_size = 128;
   if(stack_alloc_size > MAX_STACK_ALLOC / sizeof(FLOAT))
       stack_alloc_size = 0;
   FLOAT stack_buffer[stack_alloc_size];
