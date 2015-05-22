@@ -126,7 +126,7 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
 
   int trans, uplo, unit;
   blasint info;
-  FLOAT *buffer;
+  FLOAT *buffer = NULL;
 
   PRINT_DEBUG_CNAME;
 
@@ -134,7 +134,6 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
   uplo  = -1;
   trans = -1;
   info  =  0;
-
   if (order == CblasColMajor) {
     if (Uplo == CblasUpper)         uplo  = 0;
     if (Uplo == CblasLower)         uplo  = 1;
@@ -194,11 +193,13 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
 
   if (incx < 0 ) x -= (n - 1) * incx;
 
-  buffer = (FLOAT *)blas_memory_alloc(1);
+  if(trans || incx !=1)
+    buffer = (FLOAT *)blas_memory_alloc(1);
 
   (trsv[(trans<<2) | (uplo<<1) | unit])(n, a, lda, x, incx, buffer);
 
-  blas_memory_free(buffer);
+  if(buffer)
+    blas_memory_free(buffer);
 
   FUNCTION_PROFILE_END(1, n * n / 2 + n,  n * n);
 
