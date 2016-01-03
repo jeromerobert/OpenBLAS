@@ -112,7 +112,6 @@ endif
 
 tests :
 ifndef NOFORTRAN
-ifndef TARGET
 ifndef CROSS
 	touch $(LIBNAME)
 ifndef NO_FBLAS
@@ -123,7 +122,6 @@ endif
 endif
 ifndef NO_CBLAS
 	$(MAKE) -C ctest all
-endif
 endif
 endif
 endif
