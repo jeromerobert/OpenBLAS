@@ -107,7 +107,7 @@ void NAME(char *UPLO, char *TRANS, char *DIAG,
   blasint info;
   int uplo;
   int unit;
-  int trans;
+  int trans, buffer_size;
   FLOAT *buffer;
 #ifdef SMP
   int nthreads;
@@ -154,7 +154,7 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
 	   enum CBLAS_TRANSPOSE TransA, enum CBLAS_DIAG Diag,
 	   blasint n, FLOAT  *a, blasint lda, FLOAT  *x, blasint incx) {
 
-  int trans, uplo, unit;
+  int trans, uplo, unit, buffer_size;
   blasint info;
   FLOAT *buffer;
 #ifdef SMP
@@ -227,11 +227,18 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
 
   if (incx < 0 ) x -= (n - 1) * incx * 2;
 
-  buffer = (FLOAT *)blas_memory_alloc(1);
-
 #ifdef SMP
   nthreads = num_cpu_avail(2);
+#endif
+  if(nthreads == 1) {
+    buffer_size = ((n - 1) / DTB_ENTRIES) * 2 * DTB_ENTRIES + 10;
+    if(incx != 1)
+      buffer_size += n * 2;
+  } else
+    buffer_size = 0;
+  STACK_ALLOC(buffer_size, FLOAT, buffer);
 
+#ifdef SMP
   if (nthreads == 1) {
 #endif
 
@@ -245,7 +252,7 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
   }
 #endif
 
-  blas_memory_free(buffer);
+  STACK_FREE(buffer);
 
   FUNCTION_PROFILE_END(4, n * n / 2 + n,  n * n);
 
