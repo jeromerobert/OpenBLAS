@@ -228,7 +228,10 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
   if (incx < 0 ) x -= (n - 1) * incx * 2;
 
 #ifdef SMP
-  nthreads = num_cpu_avail(2);
+  if(n < 128 * GEMM_MULTITHREAD_THRESHOLD / sizeof(FLOAT))
+    nthreads = 1;
+  else
+    nthreads = num_cpu_avail(2);
 #endif
   if(nthreads == 1) {
     buffer_size = ((n - 1) / DTB_ENTRIES) * 2 * DTB_ENTRIES + 10;
