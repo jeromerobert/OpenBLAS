@@ -5,13 +5,13 @@
 #include <time.h>
 #include <cblas.h>
 #include <omp.h>
-#define MIN_SIZE 5
-#define MAX_SIZE 60
+#define MIN_SIZE 6
+#define MAX_SIZE 100
 #define NB_SIZE 10
 
 // number of loop for a 1x1 matrix. Lower it if the test is
 // too slow on you computer.
-#define NLOOP 2e7
+#define NLOOP 5e3
 
 typedef struct {
     int matrix_size;
@@ -99,12 +99,13 @@ void * pthread_func_wrapper(void * param) {
     ((BenchParam *)param)->bench_func(param);
     pthread_exit(NULL);
 }
-#define NB_TESTS 5
+#define NB_TESTS 6
 void * TESTS[4 * NB_TESTS] = {
     trmv_bench, ztrmv_, z_create_matrix, "ztrmv",
-    gemv_bench, dgemv_, d_create_matrix, "dgemv",
-    gemv_bench, zgemv_, z_create_matrix, "zgemv",
+    trmv_bench, ctrmv_, c_create_matrix, "ctrmv",
+    ger_bench, sger_, s_create_matrix, "sger",
     ger_bench, dger_, d_create_matrix, "dger",
+    ger_bench, cgerc_, c_create_matrix, "cgerc",
     ger_bench, zgerc_, z_create_matrix, "zgerc",
 };
 
@@ -171,14 +172,14 @@ int main(int argc, char * argv[]) {
         while(size <= MAX_SIZE) {
             param.matrix_size = (int)(size + 0.5);
             double seq_time = seq_bench(&param);
-            double omp_time = omp_bench(&param);
-            double pthread_time = pthread_bench(&param, omp_get_max_threads());
+            double omp_time = 0;
+            double pthread_time = 0;
             printf("matrix size %d, sequential %gs, openmp %gs, speedup %g, "
                    "pthread %gs, speedup %g\n",
                    param.matrix_size, seq_time,
                    omp_time, seq_time / omp_time,
                    pthread_time, seq_time / pthread_time);
-            size *= inc_factor;
+            size += 2;
         }
     }
 }
