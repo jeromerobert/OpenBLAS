@@ -169,7 +169,7 @@ int main(int argc, char * argv[]) {
         printf("\nBenchmark of %s\n", (char*)TESTS[test_id * 4 + 3]);
         param.n_loop = NLOOP;
         while(size <= MAX_SIZE) {
-            param.matrix_size = (int)(size + 0.5);
+            param.matrix_size = atoi(getenv("OPENBLAS_PARAM_N"));
             double seq_time = seq_bench(&param);
             double omp_time = omp_bench(&param);
             double pthread_time = pthread_bench(&param, omp_get_max_threads());
