@@ -404,7 +404,8 @@ int CNAME(BLASLONG m, FLOAT *a, BLASLONG lda, FLOAT *x, BLASLONG incx, FLOAT *bu
   if (num_cpu) {
     queue[0].sa = NULL;
     queue[0].sb = buffer + num_cpu * (((m + 3) & ~3) + 16) * COMPSIZE;
-
+    printf("num_cpu: %d %d\n", num_cpu, (((m + 3) & ~3) + 16) * COMPSIZE);
+    fflush(stdout);
     queue[num_cpu - 1].next = NULL;
 
     exec_blas(num_cpu, queue);
