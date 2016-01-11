@@ -1,9 +1,10 @@
 #! /usr/bin/env python
 
 from subprocess import *
+import sys
 
 def run(buf, n, nthread, incx):
-    return call(['./smallscaling'], stdout = PIPE, stderr=PIPE, env={
+    return call(['./csmallscaling'], stdout = PIPE, stderr=PIPE, env={
        'OPENBLAS_ZTRMV_BUF': str(buf),
        'OPENBLAS_PARAM_N': str(n),
        'OPENBLAS_NUM_THREADS': str(nthread),
@@ -20,3 +21,4 @@ for nthread in xrange(1,5):
                 buf += 1
             prev_buf = buf
             print n, buf
+            sys.stdout.flush()

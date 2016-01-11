@@ -102,7 +102,8 @@ void * pthread_func_wrapper(void * param) {
 }
 #define NB_TESTS 1
 void * TESTS[4 * NB_TESTS] = {
-    trmv_bench, ztrmv_, z_create_matrix, "ztrmv",
+    //trmv_bench, ztrmv_, z_create_matrix, "ztrmv",
+    trmv_bench, ctrmv_, c_create_matrix, "ctrmv",
     /*gemv_bench, dgemv_, d_create_matrix, "dgemv",
     gemv_bench, zgemv_, z_create_matrix, "zgemv",
     ger_bench, dger_, d_create_matrix, "dger",
