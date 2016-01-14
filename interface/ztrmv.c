@@ -235,7 +235,7 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
     if(incx != 1)
       buffer_size += n * 2;
   } else if(n <= 16) {
-    buffer_size = 32;
+    buffer_size = n * 4 + 40;
   } else {
     buffer_size = 0;
   }
