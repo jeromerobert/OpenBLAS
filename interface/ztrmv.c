@@ -231,11 +231,14 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
   nthreads = num_cpu_avail(2);
 #endif
   if(nthreads == 1) {
-    buffer_size = ((n - 1) / DTB_ENTRIES) * 2 * DTB_ENTRIES + 10;
+    buffer_size = ((n - 1) / DTB_ENTRIES) * 2 * DTB_ENTRIES + 32 / sizeof(FLOAT);
     if(incx != 1)
       buffer_size += n * 2;
-  } else
+  } else if(n <= 16) {
+    buffer_size = 32;
+  } else {
     buffer_size = 0;
+  }
   STACK_ALLOC(buffer_size, FLOAT, buffer);
 
 #ifdef SMP
