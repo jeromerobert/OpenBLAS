@@ -96,10 +96,13 @@ void ger_bench(BenchParam * param) {
     free(y);
 }
 
+#ifndef _WIN32
 void * pthread_func_wrapper(void * param) {
     ((BenchParam *)param)->bench_func(param);
     pthread_exit(NULL);
 }
+#endif
+
 #define NB_TESTS 1
 void * TESTS[4 * NB_TESTS] = {
     //trmv_bench, ztrmv_, z_create_matrix, "ztrmv",
@@ -118,6 +121,9 @@ inline static double delta_time(struct timespec tick) {
 
 double pthread_bench(BenchParam * param, int nb_threads)
 {
+#ifdef _WIN32
+    return 0;
+#else
     BenchParam threaded_param = *param;
     pthread_t threads[nb_threads];
     int t, rc;
@@ -135,6 +141,7 @@ double pthread_bench(BenchParam * param, int nb_threads)
         pthread_join(threads[t], NULL);
     }
 	return delta_time(tick);
+#endif
 }
 
 double seq_bench(BenchParam * param) {
