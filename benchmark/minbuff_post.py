@@ -36,21 +36,21 @@ cdb[(1, 2)][1] = lambda n: ((n - 1) / DTB_ENTRIES) * DTB_ENTRIES * 2 + 4 + 2 * n
 zdb[(1, 1)][1] = lambda n: ((n - 1) / DTB_ENTRIES) * DTB_ENTRIES * 2 - 6
 zdb[(1, 2)][1] = lambda n: ((n - 1) / DTB_ENTRIES) * DTB_ENTRIES * 2 - 6 + 2 * n
 
-cdb[(2, 1)][1] = lambda n:  n + 1
-cdb[(3, 1)][1] = lambda n:  n + 1
-cdb[(4, 1)][1] = lambda n:  n + 1
+cdb[(2, 1)][1] = lambda n:  (n + 5 - 4) * (4 / 4)
+cdb[(3, 1)][1] = lambda n:  (n + 5 - 4) * (4 / 4)
+cdb[(4, 1)][1] = lambda n:  (n + 5 - 4) * (4 / 4)
 
-cdb[(2, 2)][1] = lambda n:  (n - 4) * 4 + 40
-cdb[(3, 2)][1] = lambda n:  (n - 4) * 4 + 40
-cdb[(4, 2)][1] = lambda n:  (n - 4) * 4 + 40
+cdb[(2, 2)][1] = lambda n:  (n - 16 / 4) * 4 + 40
+cdb[(3, 2)][1] = lambda n:  (n - 16 / 4) * 4 + 40
+cdb[(4, 2)][1] = lambda n:  (n - 16 / 4) * 4 + 40
 
-zdb[(2, 1)][1] = lambda n:  (n - 3) * 2
-zdb[(3, 1)][1] = lambda n:  (n - 3) * 2
-zdb[(4, 1)][1] = lambda n:  (n - 3) * 2
+zdb[(2, 1)][1] = lambda n:  (n + 5 - 8) * (8 / 4)
+zdb[(3, 1)][1] = lambda n:  (n + 5 - 8) * (8 / 4)
+zdb[(4, 1)][1] = lambda n:  (n + 5 - 8) * (8 / 4)
 
-zdb[(2, 2)][1] = lambda n:  (n - 2) * 4 + 40
-zdb[(3, 2)][1] = lambda n:  (n - 2) * 4 + 40
-zdb[(4, 2)][1] = lambda n:  (n - 2) * 4 + 40
+zdb[(2, 2)][1] = lambda n:  (n - 16 / 8) * 4 + 40
+zdb[(3, 2)][1] = lambda n:  (n - 16 / 8) * 4 + 40
+zdb[(4, 2)][1] = lambda n:  (n - 16 / 8) * 4 + 40
 
 print "ctrmv"
 test_data(cdb)
