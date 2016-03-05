@@ -1,5 +1,5 @@
-ZGEMVNKERNEL = zgemv_n_dup.S
-ZGEMVTKERNEL = zgemv_t.S
+#ZGEMVNKERNEL = zgemv_n_dup.S
+#ZGEMVTKERNEL = zgemv_t.S
 
 SGEMMKERNEL    =  gemm_kernel_8x4_barcelona.S
 SGEMMINCOPY    =  ../generic/gemm_ncopy_8.c
@@ -38,25 +38,25 @@ ZGEMMITCOPYOBJ =
 ZGEMMONCOPYOBJ =  zgemm_oncopy$(TSUFFIX).$(SUFFIX)
 ZGEMMOTCOPYOBJ =  zgemm_otcopy$(TSUFFIX).$(SUFFIX)
 
-STRSMKERNEL_LN	=  trsm_kernel_LN_8x4_sse.S
-STRSMKERNEL_LT	=  trsm_kernel_LT_8x4_sse.S
-STRSMKERNEL_RN	=  trsm_kernel_LT_8x4_sse.S
-STRSMKERNEL_RT	=  trsm_kernel_RT_8x4_sse.S
+#STRSMKERNEL_LN	=  trsm_kernel_LN_8x4_sse.S
+#STRSMKERNEL_LT	=  trsm_kernel_LT_8x4_sse.S
+#STRSMKERNEL_RN	=  trsm_kernel_LT_8x4_sse.S
+#STRSMKERNEL_RT	=  trsm_kernel_RT_8x4_sse.S
 
-DTRSMKERNEL_LN	=  trsm_kernel_LN_4x4_barcelona.S
-DTRSMKERNEL_LT	=  trsm_kernel_LT_4x4_barcelona.S
-DTRSMKERNEL_RN	=  trsm_kernel_LT_4x4_barcelona.S
-DTRSMKERNEL_RT	=  trsm_kernel_RT_4x4_barcelona.S
+#DTRSMKERNEL_LN	=  trsm_kernel_LN_4x4_barcelona.S
+#DTRSMKERNEL_LT	=  trsm_kernel_LT_4x4_barcelona.S
+#DTRSMKERNEL_RN	=  trsm_kernel_LT_4x4_barcelona.S
+#DTRSMKERNEL_RT	=  trsm_kernel_RT_4x4_barcelona.S
 
-CTRSMKERNEL_LN	=  ztrsm_kernel_LN_4x2_sse.S
-CTRSMKERNEL_LT	=  ztrsm_kernel_LT_4x2_sse.S
-CTRSMKERNEL_RN	=  ztrsm_kernel_LT_4x2_sse.S
-CTRSMKERNEL_RT	=  ztrsm_kernel_RT_4x2_sse.S
+#CTRSMKERNEL_LN	=  ztrsm_kernel_LN_4x2_sse.S
+#CTRSMKERNEL_LT	=  ztrsm_kernel_LT_4x2_sse.S
+#CTRSMKERNEL_RN	=  ztrsm_kernel_LT_4x2_sse.S
+#CTRSMKERNEL_RT	=  ztrsm_kernel_RT_4x2_sse.S
 
-ZTRSMKERNEL_LN	=  ztrsm_kernel_LN_2x2_sse2.S
-ZTRSMKERNEL_LT	=  ztrsm_kernel_LT_2x2_sse2.S
-ZTRSMKERNEL_RN	=  ztrsm_kernel_LT_2x2_sse2.S
-ZTRSMKERNEL_RT	=  ztrsm_kernel_RT_2x2_sse2.S
+#ZTRSMKERNEL_LN	=  ztrsm_kernel_LN_2x2_sse2.S
+#ZTRSMKERNEL_LT	=  ztrsm_kernel_LT_2x2_sse2.S
+#ZTRSMKERNEL_RN	=  ztrsm_kernel_LT_2x2_sse2.S
+#ZTRSMKERNEL_RT	=  ztrsm_kernel_RT_2x2_sse2.S
 
 CGEMM3MKERNEL    =  zgemm3m_kernel_8x4_barcelona.S
 ZGEMM3MKERNEL    =  zgemm3m_kernel_4x4_barcelona.S
