@@ -253,7 +253,7 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
   if(env_s != NULL) {
     buffer_size = atoi(env_s);
   }
-  printf("n=%d incx=%d DTB_ENTRIES=%d buffer_size=%d\n", n, incx, DTB_ENTRIES, buffer_size);
+  printf("n=%d trans=%d uplo=%d incx=%d DTB_ENTRIES=%d buffer_size=%d\n", n, trans, uplo, incx, DTB_ENTRIES, buffer_size);
   fflush(stdout);
 
   STACK_ALLOC(buffer_size, FLOAT, buffer);
