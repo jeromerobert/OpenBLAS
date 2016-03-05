@@ -51,8 +51,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   /* make it volatile because some function (ex: dgemv_n.S) */             \
   /* do not restore all register */                                        \
   volatile int stack_alloc_size = SIZE;                                    \
-  if(stack_alloc_size > MAX_STACK_ALLOC / sizeof(TYPE))                    \
-    stack_alloc_size = 0;                                                  \
   STACK_ALLOC_PROTECT_SET                                                  \
   TYPE stack_buffer[stack_alloc_size] __attribute__((aligned(0x20)));    \
   BUFFER = stack_alloc_size ? stack_buffer : (TYPE *)blas_memory_alloc(1);

@@ -54,9 +54,10 @@ void trmv_bench(BenchParam * param)
     int i, n;
     int size = param->matrix_size;
     n = param->n_loop / size;
-    int one = 1;
+    n = 1;
+    int one = atoi(getenv("OPENBLAS_INCX"));
     void * A = param->create_matrix(size * size);
-    void * y = param->create_matrix(size);
+    void * y = param->create_matrix(size * one);
     for(i = 0; i < n; i++) {
         param->blas_func("U", "N", "N", &size, A, &size, y, &one);
     }
@@ -102,13 +103,14 @@ void * pthread_func_wrapper(void * param) {
 }
 #endif
 
-#define NB_TESTS 5
+#define NB_TESTS 1
 void * TESTS[4 * NB_TESTS] = {
-    trmv_bench, ztrmv_, z_create_matrix, "ztrmv",
-    gemv_bench, dgemv_, d_create_matrix, "dgemv",
+    //trmv_bench, ztrmv_, z_create_matrix, "ztrmv",
+    trmv_bench, ctrmv_, c_create_matrix, "ctrmv",
+    /*gemv_bench, dgemv_, d_create_matrix, "dgemv",
     gemv_bench, zgemv_, z_create_matrix, "zgemv",
     ger_bench, dger_, d_create_matrix, "dger",
-    ger_bench, zgerc_, z_create_matrix, "zgerc",
+    ger_bench, zgerc_, z_create_matrix, "zgerc",*/
 };
 
 inline static double delta_time(struct timespec tick) {
@@ -169,14 +171,14 @@ int main(int argc, char * argv[]) {
     int test_id;
     printf ("Running on %d threads\n", omp_get_max_threads());
     for(test_id = 0; test_id < NB_TESTS; test_id ++) {
-        double size = MIN_SIZE;
+        double size = MAX_SIZE;
         param.bench_func = TESTS[test_id * 4];
         param.blas_func = TESTS[test_id * 4 + 1];
         param.create_matrix = TESTS[test_id * 4 + 2];
         printf("\nBenchmark of %s\n", (char*)TESTS[test_id * 4 + 3]);
         param.n_loop = NLOOP;
         while(size <= MAX_SIZE) {
-            param.matrix_size = (int)(size + 0.5);
+            param.matrix_size = atoi(getenv("OPENBLAS_PARAM_N"));
             double seq_time = seq_bench(&param);
             double omp_time = omp_bench(&param);
             double pthread_time = pthread_bench(&param, omp_get_max_threads());
