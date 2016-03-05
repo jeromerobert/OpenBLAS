@@ -248,6 +248,12 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
     // Fro bulldozer and barcelona kernels
     buffer_size += 16;
   }
+
+  const char * env_s = getenv("OPENBLAS_ZTRMV_BUF");
+  if(env_s != NULL) {
+    buffer_size = atoi(env_s);
+  }
+
   STACK_ALLOC(buffer_size, FLOAT, buffer);
 
 #ifdef SMP

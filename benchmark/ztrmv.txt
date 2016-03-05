@@ -1,0 +1,18 @@
+CORE2 with DTB_ENTRIES=256
+INCX = 1
+CTRMV
+N 1 to 256 => no need of buffer
+N 257 to 512 => 512 + 4
+N 513 to 768 => 1024 + 4
+buffer = (N-1) / 256 * 512 + 4
+
+ZTRMV
+buffer = (N-1) / 256 * 512 + 10
+
+INCX > 1
+n < 256
+ZTRMV => buffer = n * 2 + (n-1) / 256 * 512 - 6
+CTRMV => buffer = n / 2 * 2 - 12
+n > 256
+ZTRMV => buffer = n * 2 + (n-1) / 256 * 512 + 10
+CTRMV => buffer = n / 2 * 4 + (n-1) / 256 * 512 + 8
