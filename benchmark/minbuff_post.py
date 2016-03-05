@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-DTB_ENTRIES = 64
+DTB_ENTRIES = 48
 
 def read_data(file_name):
     db = {}
@@ -12,9 +12,12 @@ def read_data(file_name):
             nthread = int(h[1])
             incx = int(h[3])
             values = []
-            for i in xrange(1,1024):
-                values.append(int(f.readline().split()[1]))
-            db[(nthread, incx)] = [values, None]
+            try:
+                for i in xrange(1,1024):
+                    values.append(int(f.readline().split()[1]))
+                db[(nthread, incx)] = [values, None]
+            except IndexError:
+                pass
     return db
 
 def test_data(db):
@@ -27,8 +30,8 @@ def test_data(db):
                 fv = (formula(i) + 3) & ~3
                 print i, values[i-1], fv, fv - values[i-1]
 
-zdb = read_data('ztrmv_min_buff.log')
-cdb = read_data('ctrmv_min_buff.log')
+zdb = read_data('ztrmv_min_buff_amd.log')
+cdb = read_data('ctrmv_min_buff_amd.log')
 
 # multi threaded up to n=16 only
 cdb[(1, 1)][1] = lambda n: ((n - 1) / DTB_ENTRIES) * DTB_ENTRIES * 2 + 4
@@ -50,9 +53,9 @@ zdb[(4, 1)][1] = lambda n:  (n + 5 - 8) * (8 / 4)
 
 zdb[(2, 2)][1] = lambda n:  (n - 16 / 8) * 4 + 40
 zdb[(3, 2)][1] = lambda n:  (n - 16 / 8) * 4 + 40
-zdb[(4, 2)][1] = lambda n:  (n - 16 / 8) * 4 + 40
+#zdb[(4, 2)][1] = lambda n:  (n - 16 / 8) * 4 + 40
 
-print "ctrmv"
-test_data(cdb)
+#print "ctrmv"
+#test_data(cdb)
 print "ztrmv"
 test_data(zdb)
