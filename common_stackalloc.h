@@ -29,8 +29,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef STACK_ALLOC_PROTECT
 // Try to detect stack smashing
 #include <assert.h>
-#define STACK_ALLOC_PROTECT_SET volatile int stack_check = 0x7fc01234;
-#define STACK_ALLOC_PROTECT_CHECK assert(stack_check == 0x7fc01234);
+#define STACK_ALLOC_PROTECT_SET volatile long stack_check = 0x7fc0123456789ABC;
+#define STACK_ALLOC_PROTECT_CHECK assert(stack_check == 0x7fc0123456789ABC);
 #else
 #define STACK_ALLOC_PROTECT_SET
 #define STACK_ALLOC_PROTECT_CHECK
