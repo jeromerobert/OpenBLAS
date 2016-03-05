@@ -53,7 +53,7 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   volatile int stack_alloc_size = SIZE;                                    \
   STACK_ALLOC_PROTECT_SET                                                  \
   TYPE stack_buffer[stack_alloc_size] __attribute__((aligned(0x20)));    \
-  BUFFER = stack_alloc_size ? stack_buffer : (TYPE *)blas_memory_alloc(1);
+  BUFFER = stack_alloc_size ? malloc(stack_alloc_size * sizeof(TYPE)) : (TYPE *)blas_memory_alloc(1);
 #else
   //Original OpenBLAS/GotoBLAS codes.
   #define STACK_ALLOC(SIZE, TYPE, BUFFER) BUFFER = (TYPE *)blas_memory_alloc(1)
@@ -64,7 +64,8 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define STACK_FREE(BUFFER)    \
   STACK_ALLOC_PROTECT_CHECK   \
   if(!stack_alloc_size)       \
-    blas_memory_free(BUFFER);
+    blas_memory_free(BUFFER); \
+  else free(BUFFER)
 #else
 #define STACK_FREE(BUFFER) blas_memory_free(BUFFER)
 #endif
