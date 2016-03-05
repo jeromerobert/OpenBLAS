@@ -245,6 +245,8 @@ void CNAME(enum CBLAS_ORDER order, enum CBLAS_UPLO Uplo,
     buffer_size = ((n - 1) / DTB_ENTRIES) * 2 * DTB_ENTRIES + 32 / sizeof(FLOAT);
     if(incx != 1)
       buffer_size += n * 2;
+    // Fro bulldozer and barcelona kernels
+    buffer_size += 16;
   }
   STACK_ALLOC(buffer_size, FLOAT, buffer);
 
